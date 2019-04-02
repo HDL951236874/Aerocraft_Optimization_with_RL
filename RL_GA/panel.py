@@ -4,11 +4,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSize
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-import navigation_mainwindow
-import main
+import RL_GA.navigation_mainwindow
+import RL_GA.main
 import math
 
-class navigation_mainwindow(navigation_mainwindow.Ui_navigation_mainwindow):
+class navigation_mainwindow(RL_GA.navigation_mainwindow.Ui_navigation_mainwindow):
     def __init__(self):
         super(navigation_mainwindow, self).__init__()
         self.setupUi(self)
@@ -23,7 +23,7 @@ class navigation_mainwindow(navigation_mainwindow.Ui_navigation_mainwindow):
 
     def start_simulation(self):
         if self.comboBox.currentText() == 'classic':
-            self.x,self.y,self.xt,self.yt,self.l1,self.V,self.l2,self.ny = main.main(
+            self.x,self.y,self.xt,self.yt,self.l1,self.V,self.l2,self.ny = RL_GA.main.main(
                 float(self.lineEdit.text()),
                 float(self.lineEdit_2.text()),
                 float(self.lineEdit_3.text()),
@@ -48,11 +48,11 @@ class navigation_mainwindow(navigation_mainwindow.Ui_navigation_mainwindow):
             S_new = []
             for i in range(len(S)):
                 S_new += [float(S[i])] * 50
-            self.x, self.y, self.xt, self.yt, self.l1, self.V, self.l2, self.ny = main.main(
+            self.x, self.y, self.xt, self.yt, self.l1, self.V, self.l2, self.ny = RL_GA.main.main(
                 float(self.lineEdit.text()),
                 float(self.lineEdit_2.text()),
                 float(self.lineEdit_3.text()),
-                float(self.lineEdit_4.text()) / float(self.lineEdit_18.text()),
+                float(self.lineEdit_4.text()) / float(self.lineEdit_18.text())*math.pi,
                 float(self.lineEdit_5.text()),
                 float(self.lineEdit_6.text()),
                 float(self.lineEdit_7.text()),
@@ -74,11 +74,11 @@ class navigation_mainwindow(navigation_mainwindow.Ui_navigation_mainwindow):
             S_new = []
             for i in range(len(S)):
                 S_new += [float(S[i])] * 50
-            self.x, self.y, self.xt, self.yt, self.l1, self.V, self.l2, self.ny = main.main(
+            self.x, self.y, self.xt, self.yt, self.l1, self.V, self.l2, self.ny = RL_GA.main.main(
                 float(self.lineEdit.text()),
                 float(self.lineEdit_2.text()),
                 float(self.lineEdit_3.text()),
-                float(self.lineEdit_4.text()) / float(self.lineEdit_18.text()),
+                float(self.lineEdit_4.text()) / float(self.lineEdit_18.text())*math.pi,
                 float(self.lineEdit_5.text()),
                 float(self.lineEdit_6.text()),
                 float(self.lineEdit_7.text()),
