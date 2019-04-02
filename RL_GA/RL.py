@@ -71,7 +71,8 @@ def choose_action(state, q_table):
 def get_env_feedback(S, A, SS,t):
     # This is how agent will interact with the environment
 
-
+    S_ = 0
+    R = 0
     if A == 2:    # move right
         SS,t,f = transition(t,SS,-100,4,15000,A,9.81)
         if f == 1:
