@@ -2,20 +2,13 @@
 
 # Form implementation generated from reading ui file 'form.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys
 
-class Ui_Form(QtWidgets.QMainWindow):
-    def __init__(self):
-        super(Ui_Form, self).__init__()
-        self.setupUi(self)
-        self.retranslateUi(self)
-
-
+class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(856, 651)
@@ -35,10 +28,3 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label.setText(_translate("Form", "Miss Ji is beautiful"))
         self.pushButton.setText(_translate("Form", "PushButton"))
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    m = Ui_Form()
-    m.show()
-    app.installEventFilter(m)
-    sys.exit(app.exec_())

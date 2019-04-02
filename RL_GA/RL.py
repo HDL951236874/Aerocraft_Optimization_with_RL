@@ -8,8 +8,8 @@ View more on my tutorial page: https://morvanzhou.github.io/tutorials/
 import numpy as np
 import pandas as pd
 import time
-from interpolation import *
-import RK4
+from RL_GA.interpolation import *
+import RL_GA.RK4
 
 
 
@@ -26,23 +26,27 @@ t = 0
 
 
 def transition(t,SS,vt,Tp1,P1,K,g):
+    flag = 0
     for i in range(50):
         P, X, ny, alpha = interpolation(t, SS[-1], vt, Tp1, P1, K)
         P = np.array([[P]])
         X = np.array([[X]])
         ny = np.array([[ny]])
         alpha = np.array([[alpha]])
-        S_temp = RK4.RK4(t, h, SS[-1], P, X, ny, alpha, vt, Tp1, P1, g)
+        S_temp = RL_GA.RK4.RK4(t, h, SS[-1], P, X, ny, alpha, vt, Tp1, P1, g)
         S_temp = np.array([S_temp])
         SS = np.row_stack((SS, S_temp))
         t += 0.05
 
-        if math.sqrt((SS[-1, 2] - SS[-1, 6]) ** 2 + (SS[-1, 3] - SS[-1, 7]) ** 2) < 100:
-            flag = 1
-            break
+        try:
+            if math.sqrt((SS[-1, 2] - SS[-1, 6]) ** 2 + (SS[-1, 3] - SS[-1, 7]) ** 2) < 100:
+                flag = 1
+                break
 
-        else:
-            flag = 0
+            else:
+                flag = 0
+        except:
+            print('some thing wrong in the transition process')
     return SS, t, flag
 
 def build_q_table(n_states, actions):
