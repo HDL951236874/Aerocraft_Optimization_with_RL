@@ -12,7 +12,7 @@ def RK4(t,h,S_i,P,X,ny,alpha,vt,Tp1,P1,g):
         thetat = S_i[5]
         xt = S_i[6]
         yt = S_i[7]
-        #平飞目标
+        
         vtx = vt * math.cos(thetat)
         vty = vt * math.sin(thetat)
         dV = (P * math.cos(alpha) - X) / m - g * math.sin(theta)

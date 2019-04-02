@@ -60,7 +60,7 @@ def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1
         ny = np.row_stack((ny, ny_temp))
         alpha = np.row_stack((alpha, alpha_temp))
 
-        S_temp = RK4.RK4(t, h, S[i], P[i], X[i], ny[i], alpha[i],vt,Tp1,P1,g)
+        S_temp = RL_GA.RK4.RK4(t, h, S[i], P[i], X[i], ny[i], alpha[i],vt,Tp1,P1,g)
         S = np.row_stack((S, S_temp))
 
         R = np.zeros(10000)

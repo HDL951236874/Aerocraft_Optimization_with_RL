@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     # q = build_q_table(N_STATES,ACTIONS)
     # print(q.iloc[1249].max())
-
+    # 
     # SS = np.array([[400, 20 / 180, 0, 10000, 100, 0, 40000, 10000]])
     # i=0
     # while True:

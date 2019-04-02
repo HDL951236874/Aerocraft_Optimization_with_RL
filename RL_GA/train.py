@@ -1,4 +1,4 @@
-import main
+import RL_GA.main
 
 
 # x,y,xt,yt,l1,V,l2,ny = main.main(9.81,0,10000,20/180,400,40000,10000,0,-100,100,15000,0,240,0,4,0,0,3)
@@ -22,7 +22,7 @@ def fitness(S):
     S_new = []
     for i in range(len(S)):
         S_new += [float(S[i])]*50
-    num = main.main(9.81,0,10000,20/180,400,40000,10000,0,-100,100,15000,0,240,0,4,0,0,S_new)
+    num = RL_GA.main.main(9.81,0,10000,20/180,400,40000,10000,0,-100,100,15000,0,240,0,4,0,0,S_new)
     return num / 100
 
 
