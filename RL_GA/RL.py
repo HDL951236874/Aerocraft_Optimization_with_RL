@@ -27,7 +27,7 @@ t = 0
 
 def transition(t,SS,vt,Tp1,P1,K,g):
     flag = 0
-    for i in range(50):
+    for i in range(50):#这里的50是因为程序没0.05秒核算一次，我们设定的是2.5秒改变一次k，所以2.5/0.05
         P, X, ny, alpha = interpolation(t, SS[-1], vt, Tp1, P1, K)
         P = np.array([[P]])
         X = np.array([[X]])

@@ -1,7 +1,7 @@
 import math
 import  numpy as np
-import aero_parameter
-import interp
+import RL_GA.aero_parameter
+import RL_GA.interp
 #很坑的全局变量
 # g=parameter.g
 # Tp1=parameter.Tp1#发动机工作时间
@@ -77,7 +77,7 @@ def interpolation(t,S,vt,Tp1,P1,K):
     ny = -K * vc * qd / (g * math.cos(theta - qs)) + math.cos(theta) #ny为弹道系需用法向过载
     R0 = 6371000
     h = math.sqrt(x ** 2 + (y + R0) **2) - R0
-    T0, SONIC, P0, RHO = aero_parameter.aero_parameter(h)
+    T0, SONIC, P0, RHO = RL_GA.aero_parameter.aero_parameter(h)
     Ma = v / SONIC  #计算马赫数
     q = 0.5 * RHO * v **2 # 动压
     s = 0.0201  #特征面积
@@ -90,18 +90,18 @@ def interpolation(t,S,vt,Tp1,P1,K):
 
     XX = np.array([AMa_CX, ACXnac]).T
     while 1:
-        na2 = (P * math.sin(a2) + (np.sign(a2) * interp.twointerp(Aan, AMa, ACN, abs(a2), Ma) * math.cos(a2) -
-              (interp.twointerp(Aax, AMa_CX, ACX, abs(a2), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) +
-               interp.oneinterp1(XX, Ma) * (t > Tp1)) * math.sin(a2)) * q * s) / m / g
-        na1 = (P * math.sin(a1) + (np.sign(a1) * interp.twointerp(Aan, AMa, ACN, abs(a1), Ma) * math.cos(a1) -
-              (interp.twointerp(Aax, AMa_CX, ACX, abs(a1), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) *
+        na2 = (P * math.sin(a2) + (np.sign(a2) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(a2), Ma) * math.cos(a2) -
+              (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(a2), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) +
+               RL_GA.interp.oneinterp1(XX, Ma) * (t > Tp1)) * math.sin(a2)) * q * s) / m / g
+        na1 = (P * math.sin(a1) + (np.sign(a1) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(a1), Ma) * math.cos(a1) -
+              (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(a1), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX, Ma) *
                (t > Tp1)) * math.sin(a1)) * q * s) / m / g
         am = (ny - na1) * (a2 - a1) / (na2 - na1) + a1
         # nam = (P * math.sin(am) + (np.sign(am) * interp.twointerp(Aan, AMa, ACN, abs(am), Ma) * math.cos(am) -
         # (interp.twointerp(Aax, AMa_CX, ACX, abs(am), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) *
         #  (t > Tp1)) * math.sin(am)) * q * s) / m / g
-        nam = (P * math.sin(am) + (np.sign(am) * interp.twointerp(Aan, AMa, ACN, abs(am), Ma) * math.cos(am) - (
-        interp.twointerp(Aax, AMa_CX, ACX, abs(am), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) * (
+        nam = (P * math.sin(am) + (np.sign(am) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(am), Ma) * math.cos(am) - (
+        RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(am), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX, Ma) * (
         t > Tp1)) * math.sin(am)) * q * s) / m / g
 
         #nam_b=(interp.twointerp(Aan, AMa, ACN, abs(am), Ma) )
@@ -121,18 +121,18 @@ def interpolation(t,S,vt,Tp1,P1,K):
     ny = nam
     if alpha > 40 * AE:
         alpha = 40 * AE
-        ny = (P * math.sin(alpha) + (np.sign(alpha) * interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * math.cos(alpha) -
-        (interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) *
+        ny = (P * math.sin(alpha) + (np.sign(alpha) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * math.cos(alpha) -
+        (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX, Ma) *
          (t > Tp1)) * math.sin(alpha)) * q * s) / m / g
 
     if alpha < -40 * AE:
         alpha = -40 * AE
-        ny = (P * math.sin(alpha) + (np.sign(alpha) * interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * math.cos(alpha) -
-        (interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) *
+        ny = (P * math.sin(alpha) + (np.sign(alpha) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * math.cos(alpha) -
+        (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX, Ma) *
          (t > Tp1)) * math.sin(alpha)) * q * s) / m / g
 
-    XF = (interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX,Ma) * (t > Tp1)) * q * s  #弹体系
-    YF = np.sign(alpha) * interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * q * s    #弹体系
+    XF = (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX,Ma) * (t > Tp1)) * q * s  #弹体系
+    YF = np.sign(alpha) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * q * s    #弹体系
 
     XF1 = XF* math.cos(alpha) + YF * math.sin(alpha)  # 弹道系
     YF1 = YF* math.cos(alpha) - XF* math.sin(alpha)   #弹道系

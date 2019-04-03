@@ -15,6 +15,7 @@ def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1
         P, X, ny, alpha = RL_GA.interpolation.interpolation(t, S[i], vt, Tp1, P1, K[0])
     else:
         P, X, ny, alpha = RL_GA.interpolation.interpolation(t, S[i], vt, Tp1, P1, K)
+    print(vt)
     P = np.array([[P]])
     X = np.array([[X]])
     ny = np.array([[ny]])

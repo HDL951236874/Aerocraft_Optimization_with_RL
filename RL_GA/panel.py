@@ -41,7 +41,7 @@ class navigation_mainwindow(RL_GA.navigation_mainwindow.Ui_navigation_mainwindow
                 float(self.lineEdit_15.text()),
                 float(self.lineEdit_16.text()),
                 float(self.lineEdit_17.text()),
-                3
+                2
             )
         if self.comboBox.currentText() == 'GA':
             S = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 2, 4, 2, 2]
