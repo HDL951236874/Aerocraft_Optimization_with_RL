@@ -104,7 +104,7 @@ def test(RL):
 
 def run_maze():
     step = 0
-    for episode in range(100):
+    for episode in range(5000):
         print(episode)
         # initial observation
         observation = env_real.reset()
