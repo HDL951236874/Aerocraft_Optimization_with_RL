@@ -102,7 +102,7 @@ def interpolation(t,S,vt,Tp1,P1,K):
         #  (t > Tp1)) * math.sin(am)) * q * s) / m / g
         nam = (P * math.sin(am) + (np.sign(am) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(am), Ma) * math.cos(am) - (
         RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(am), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX, Ma) * (
-        t > Tp1)) * math.sin(am)) * q * s) / m / g
+            t > Tp1)) * math.sin(am)) * q * s) / m / g
 
         #nam_b=(interp.twointerp(Aan, AMa, ACN, abs(am), Ma) )
         #        - (interp.twointerp(Aax, AMa_CX, ACX, abs(am), Ma) + interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + interp.oneinterp1(XX, Ma) * (
@@ -133,6 +133,8 @@ def interpolation(t,S,vt,Tp1,P1,K):
 
     XF = (RL_GA.interp.twointerp(Aax, AMa_CX, ACX, abs(alpha), Ma) + RL_GA.interp.twointerp(AH, AMa_CX, ACXH, h / 1000, Ma) + RL_GA.interp.oneinterp1(XX,Ma) * (t > Tp1)) * q * s  #弹体系
     YF = np.sign(alpha) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(alpha), Ma) * q * s    #弹体系
+
+    YF_test = np.sign(-0.0164) * RL_GA.interp.twointerp(Aan, AMa, ACN, abs(-0.0164), Ma) * q * s
 
     XF1 = XF* math.cos(alpha) + YF * math.sin(alpha)  # 弹道系
     YF1 = YF* math.cos(alpha) - XF* math.sin(alpha)   #弹道系

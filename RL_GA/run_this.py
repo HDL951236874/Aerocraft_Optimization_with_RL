@@ -4,6 +4,9 @@ import math
 from RL_GA.RL import transition
 from RL_GA.interpolation import *
 from RL_GA.RK4 import *
+from RL_GA.pytorch_RL import *
+import torch
+from torch.autograd import Variable
 
 class env():
     def __init__(self):
@@ -71,61 +74,28 @@ class env():
 
         return np.array([self.SS[-1,2],self.SS[-1,3],self.SS[-1,1]]),R,flag
 
-def normalization(ob,env):
-
-    a=(ob[0] - env.x) / (env.xt - env.x)
-    b=(ob[1] - env.y) / (13000 - env.y)
-    c=(ob[2] - env.xt) / (env.x - env.xt)
-    d=(ob[3] - env.yt) / (13000 - env.y)
-    e=(ob[4] - 0) / (math.pi / 2)
-
-    return np.array([a,b,c,d,e])
-
-def test(RL):
-    env_test = env()
-    al = []
-    done = False
-    ob = env_test.reset()
-
-    while not done:
-        ob = ob[np.newaxis, :]
 
 
-        actions_value = RL.sess.run(RL.q_eval, feed_dict={RL.s: ob})
-        action = np.argmax(actions_value)
-
-        print(str(actions_value)+'最大的是'+str(action+2))
-        al.append(action + 2)
-        ob, R, done = env_test.step(action)
-
-    print(al)
-    print(np.mean(env_test.SS[:, 0]))
-
-
-def run_maze():
+def run_maze(net,net_):
     step = 0
-    for episode in range(5000):
+    for episode in range(50):
         print(episode)
         # initial observation
         observation = env_real.reset()
         # observation = normalization(observation,env())
         while True:
+            observation = torch.from_numpy(observation).float()
 
-            # print(env.t)
-            # RL choose action based on observation
-            action = RL.choose_action(observation)
+            action = np.argmax(net.choose_action(observation).detach().numpy())
 
             # RL take action and get next observation and reward
             observation_, reward, done = env_real.step(action)
 
-            # reward = (reward-700)/(800-700)
-            # observation_ = normalization(observation_,env())
 
-            RL.store_transition(observation, action, reward, observation_)
+            net.store_transition(observation, action, reward, observation_)
 
             if (step > 200) and (step % 5 == 0):
-                RL.learn()
-
+                net.learn(net_)
 
             # swap observation
             observation = observation_
@@ -135,10 +105,6 @@ def run_maze():
                 break
             step += 1
 
-        test(RL)
-
-
-
     # end of game
     print('game over')
 
@@ -146,28 +112,27 @@ def run_maze():
 if __name__ == "__main__":
     # maze game
     env_real = env()
-    RL = DeepQNetwork(env_real.n_actions, env_real.n_features,
-                      learning_rate=0.01,
-                      reward_decay=0.9,
-                      e_greedy=0.9,
-                      replace_target_iter=200,
-                      memory_size=2000,
-                      output_graph=True
-                      )
-
-    run_maze()
-    RL.plot_cost()
+    net = simpleNet(3,10,10,3)
+    net_ = simpleNet(3,10,10,3)
+    run_maze(net,net_)
 
 
-    RL.epsilon = 1
-    al = []
+    env_test = env()
+    ob = env_test.reset()
     done = False
-    ob = env_real.reset()
+    al = []
 
-    while not done:
-        a = RL.choose_action(ob)
-        al.append(a+2)
-        ob, R, done = env_real.step(a)
+    while done!=True:
+        ob = torch.from_numpy(ob).float()
+
+        action = np.argmax(net.choose_action(ob).detach().numpy())
+
+        al.append(action+2)
+
+        ob_ ,r,done= env_test.step(action)
+
+        ob = ob_
 
     print(al)
-    print(np.mean(env_real.SS[:,0]))
+    print(np.mean(env_test.SS[:,0]))
+

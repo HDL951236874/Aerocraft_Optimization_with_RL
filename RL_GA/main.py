@@ -9,8 +9,8 @@ import RL_GA.RK4
 def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1, Tp2, mzt, K):
     S = np.array([[v0, theta0, x0, y0, m0, thetat0, xt0, yt0]])
     i = 0
-    h = 0.05
     t = 0
+    h = 0.05
     if type(K) == list:
         P, X, ny, alpha = RL_GA.interpolation.interpolation(t, S[i], vt, Tp1, P1, K[0])
     else:
@@ -24,9 +24,9 @@ def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1
     S_temp = np.array([S_temp])
     S = np.row_stack((S, S_temp))
     i = 1
-    t = 0.05
     z = 1
-    while t <= Tp1:
+    t = 0
+    while 0.05 <= Tp1-t:
         if type(K) == list:
             P_temp, X_temp, ny_temp, alpha_temp = RL_GA.interpolation.interpolation(t, S[i], vt, Tp1, P1,K[z])
             z += 1
@@ -46,7 +46,7 @@ def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1
 
     S[i, 4] = S[i, 4] - mzt
 
-    while Tp1< t <= 500:
+    while Tp1-t<0.05:
         if type(K) == list:
 
             P_temp, X_temp, ny_temp, alpha_temp = RL_GA.interpolation.interpolation(t, S[i], vt,Tp1,P1,K[z])
@@ -86,5 +86,14 @@ def main(g, x0, y0, theta0, v0, xt0, yt0, thetat0, vt, m0, P1, P2, Ip1, Ip2, Tp1
     l2 = np.linspace(0, i * h, num=i + 1)
 
     print(np.mean(V))
+    # print(V)
+    # from RL_GA.test import lq
+    #
+    # dis = [lq[x] - V[x] for x in range(min(len(lq), len(V)))]
+    #
+    # for index in dis:
+    #     if index>0.5:
+    #         print(dis.index(index))
+
     return x, y, xt, yt, l1, V, l2, ny
     # return  np.mean(V)

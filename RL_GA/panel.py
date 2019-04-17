@@ -44,7 +44,7 @@ class navigation_mainwindow(RL_GA.navigation_mainwindow.Ui_navigation_mainwindow
                 2
             )
         if self.comboBox.currentText() == 'GA':
-            S = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 2, 4, 2, 2]
+            S = [6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2]
             S_new = []
             for i in range(len(S)):
                 S_new += [float(S[i])] * 50

@@ -26,6 +26,19 @@ def oneinterp2(t1,t3,t4,t6):
         while t4 > t1[j+1]:
             j = j + 1
 
+    z1 = t3[t6, j]
+    z2 = t3[t6, j]
+    z3 = t3[t6, j + 1]
+    z4 = t4
+    z5 = t1[j]
+    z6 = t1[j + 1]
+
+    z7 = (t3[t6, j] - t3[t6, j + 1])
+    z8 = (t1[j] - t1[j + 1])
+    z9 = (t4 - t1[j])
+    z10 = (t3[t6, j] - t3[t6, j + 1]) * (t4 - t1[j])
+    z11 = (t3[t6, j] - t3[t6, j + 1]) * (t4 - t1[j]) / (t1[j] - t1[j + 1])
+
     W = t3[t6, j] + (t3[t6, j] - t3[t6, j + 1]) * (t4 - t1[j]) / (t1[j] - t1[j + 1])
     return W
 
